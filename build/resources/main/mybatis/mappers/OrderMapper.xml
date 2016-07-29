@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.thoughtworks.ketsu.infrastructure.mybatis.mappers.OrderMapper">
+    <insert id="createOrder" useGeneratedKeys="true" keyProperty="info.id" keyColumn="id">
+        INSERT INTO orders (name, address, phone)
+        VALUES (#{info.name}, #{info.address}, #{info.phone});
+        SET @LAST_ORDER = LAST_INSERT_ID();
+        INSERT INTO orderitems (orderid, productid, quantity, amount) VALUES
+        <foreach collection="info.orderItems" open="(" separator="," close=")" item="orderitem">
+            @LAST_ORDER , #{orderitem.productid}, #{orderitem.quantity}, #{orderitem.quantity}*
+            (SELECT price FROM products WHERE id = #{orderitem.productid})
+        </foreach>
+    </insert>
+
+    <select id="find_order_by_orderid" resultMap="records.order">
+        SELECT * FROM orders O, orderitems I WHERE O.id = #{id} and I.orderid = #{id}
+    </select>
+    <select id="find_all_orders" resultMap="records.order">
+        SELECT * FROM orders O, orderitems I WHERE O.id = I.orderid
+    </select>
+</mapper>

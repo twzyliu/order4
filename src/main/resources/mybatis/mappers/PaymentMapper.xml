@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.thoughtworks.ketsu.infrastructure.mybatis.mappers.PaymentMapper">
+    <insert id="createPayment">
+        INSERT INTO payments (orderid, pay_type, amount)
+        VALUES (#{orderid}, #{info.pay_type}, #{info.amount})
+    </insert>
+
+    <select id="find_payment_by_orderid" resultMap="records.payment">
+        SELECT * FROM payments P
+        WHERE P.orderid = #{id}
+    </select>
+
+</mapper>

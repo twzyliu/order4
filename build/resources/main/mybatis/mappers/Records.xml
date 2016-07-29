@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="records">
+
+    <resultMap id="user" type="com.thoughtworks.ketsu.domain.User.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <resultMap id="product" type="com.thoughtworks.ketsu.domain.Product.Product">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+        <result property="price" column="price"/>
+    </resultMap>
+    <resultMap id="order" type="com.thoughtworks.ketsu.domain.Order.Order">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+        <result property="phone" column="phone"/>
+        <result property="ordertime" column="ordertime"/>
+        <collection property="orderItems" ofType="com.thoughtworks.ketsu.domain.Order.OrderItem">
+            <id property="orderid" column="orderid"/>
+            <result property="quantity" column="quantity"/>
+            <result property="productid" column="productid"/>
+            <result property="amount" column="amount"/>
+        </collection>
+    </resultMap>
+    <resultMap id="payment" type="com.thoughtworks.ketsu.domain.Payment.Payment">
+        <id property="orderid" column="orderid"/>
+        <result property="pay_type" column="pay_type"/>
+        <result property="pay_time" column="pay_time"/>
+        <result property="amount" column="amount"/>
+    </resultMap>
+
+</mapper>
